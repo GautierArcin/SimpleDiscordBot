@@ -21,13 +21,17 @@ client.once("ready", (): boolean => {
   if (client == null) throw "Client undefined";
   const name = client?.user?.tag;
   console.log(`Online as ${name}`);
-  if (process.env.GUILD == undefined || process.env.CHANNEL == null)
+  if (
+    process.env.GUILD == undefined ||
+    process.env.CHANNEL == null ||
+    process.env.MESSAGE == null
+  )
     throw "wrong environnement variable, please see .env.example";
 
   const guild = client.guilds.cache.get(process.env.GUILD);
   if (guild == null) throw "Guild undefined";
   const channel = guild.channels.cache.get(process.env.CHANNEL);
-  const Message = "GatherTown ! ";
+  const Message = process.env.MESSAGE;
 
   if (channel == null || channel.type !== "text") throw "Channel undefined";
   (channel as Discord.TextChannel)
